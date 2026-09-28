@@ -1,0 +1,21 @@
+# Dependências e ambientes
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Builds e cobertura
+dist/
+coverage/
+*.tsbuildinfo
+
+# Variáveis de ambiente (os .env.example são versionados)
+.env
+.env.*
+!.env.example
+
+# Sistema
+.DS_Store
+
+# Atenção: data/raw/ e data/processed/ NÃO são ignorados. Eles fazem parte da entrega.

@@ -1,0 +1,96 @@
+{
+  "referenceDate": "2026-09-30",
+  "seed": 42,
+  "studentCount": 8,
+  "k": 2,
+  "features": [
+    "tenureDays",
+    "daysSinceLastActivity",
+    "lessonsLast30d",
+    "attendanceRate",
+    "avgMentorshipRating",
+    "avgCorrectRate",
+    "avgEssayScore"
+  ],
+  "kSelection": [
+    {
+      "k": 2,
+      "inertia": 4734.84,
+      "silhouette": 0.3422
+    },
+    {
+      "k": 3,
+      "inertia": 3617.78,
+      "silhouette": 0.3073
+    },
+    {
+      "k": 4,
+      "inertia": 2725.79,
+      "silhouette": 0.3721
+    },
+    {
+      "k": 5,
+      "inertia": 2436.49,
+      "silhouette": 0.3687
+    },
+    {
+      "k": 6,
+      "inertia": 2267.25,
+      "silhouette": 0.3478
+    },
+    {
+      "k": 7,
+      "inertia": 2134.61,
+      "silhouette": 0.2903
+    },
+    {
+      "k": 8,
+      "inertia": 2017.87,
+      "silhouette": 0.2564
+    }
+  ],
+  "clusters": [
+    {
+      "clusterId": 0,
+      "name": "Esfriando",
+      "description": "Última atividade há 69 dias em média e 0,2 aulas em 30 dias. Presença de 51% nas mentorias; acerto de 55% nos simulados (geral 56%).",
+      "size": 5,
+      "featureMeans": {
+        "tenureDays": 152.6,
+        "daysSinceLastActivity": 62.4,
+        "lessonsLast30d": 3.0,
+        "completedMentorships": 4.4,
+        "missedMentorships": 3.2,
+        "avgMentorshipRating": 3.59,
+        "simulationsTaken": 2.8,
+        "correctRateLanguages": 0.5892,
+        "correctRateHuman": 0.5672,
+        "correctRateNature": 0.4991,
+        "correctRateMath": 0.4728,
+        "essaysSubmitted": 1.6,
+        "avgEssayScore": 599.03
+      }
+    },
+    {
+      "clusterId": 1,
+      "name": "Recém-chegados",
+      "description": "Matrícula há 25 dias em média; 35% ainda sem nenhuma atividade. 2,7 aulas em 30 dias. Hora de garantir o primeiro passo.",
+      "size": 3,
+      "featureMeans": {
+        "tenureDays": 19.67,
+        "daysSinceLastActivity": 6.5,
+        "lessonsLast30d": 1.67,
+        "completedMentorships": 0.33,
+        "missedMentorships": 0.33,
+        "avgMentorshipRating": 4.45,
+        "simulationsTaken": 0.33,
+        "correctRateLanguages": 0.5411,
+        "correctRateHuman": 0.4909,
+        "correctRateNature": 0.4917,
+        "correctRateMath": 0.4166,
+        "essaysSubmitted": 0.0,
+        "avgEssayScore": null
+      }
+    }
+  ]
+}

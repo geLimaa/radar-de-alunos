@@ -1,0 +1,11 @@
+id,name,state,studyYear,desiredCourse,schoolType,plan,mentorshipFrequency,enrolledAt,daysSinceLastActivity,lessonsLast30d,completedMentorships,missedMentorships,avgMentorshipRating,simulationsTaken,correctRateLanguages,correctRateHuman,correctRateNature,correctRateMath,essaysSubmitted,avgEssayScore
+1,Henry Gabriel Alves,RS,high_school_1,nursing,private,premium,monthly,2026-07-05,9,20,3,0,4.14,21,0.5748,0.6162,0.5141,0.4833,0,
+2,Yan da Cruz,BA,high_school_3,medicine,private,standard,monthly,2026-02-26,7,16,8,0,4.40,17,0.7583,0.6869,0.7306,0.6517,7,801.1
+3,Pietro Carvalho,GO,high_school_2,other,public,elite,biweekly,2026-02-19,49,0,10,3,3.53,3,0.5487,0.5685,0.5397,0.4379,4,626.5
+4,Gustavo Rocha,PR,high_school_2,dentistry,private,standard,monthly,2026-04-03,3,14,7,0,5.00,19,0.6991,0.6825,0.5736,0.6619,1,793.2
+5,Zoe Borges,SP,high_school_3,medicine,public,premium,monthly,2025-11-21,4,15,7,2,4.57,31,0.7148,0.6652,0.5475,0.5860,9,804.0
+6,Lavínia Andrade,RO,high_school_3,other,private,standard,monthly,2026-05-27,3,17,5,0,4.20,14,0.3943,0.5375,0.3897,0.3968,7,478.2
+7,Bento Borges,RS,prep,law,private,standard,biweekly,2026-06-10,94,0,5,3,3.47,1,0.5878,0.6419,0.5158,0.4738,0,
+8,Pedro Henrique da Conceição,RS,high_school_3,medicine,public,standard,monthly,2026-09-15,,0,0,0,,0,,,,,0,
+9,Mirella Pereira,SP,prep,medicine,public,standard,monthly,2026-02-05,119,0,3,5,3.50,2,0.5522,0.5540,0.4515,0.5170,2,628.7
+10,Benjamim Novais,BA,high_school_3,dentistry,private,premium,monthly,2026-09-02,8,2,1,0,4.45,1,0.5411,0.4909,0.4917,0.4166,0,

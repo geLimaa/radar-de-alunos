@@ -1,0 +1,91 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: #1f2937;
+  background-color: #f5f6f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.badge {
+  padding: 2px 10px;
+  border: 1px solid #f59e0b;
+  border-radius: 999px;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.card {
+  padding: 16px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.status {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.ok {
+  color: #15803d;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+.muted {
+  margin: 0 0 8px;
+  color: #6b7280;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+button {
+  padding: 6px 14px;
+  border: 1px solid #1d4ed8;
+  border-radius: 6px;
+  background-color: #1d4ed8;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e40af;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

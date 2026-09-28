@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": 3,
+      "name": "Pietro Carvalho",
+      "studyYear": "high_school_2",
+      "plan": "elite",
+      "clusterId": 0,
+      "clusterName": "Esfriando",
+      "engagementBand": "disengaged",
+      "daysSinceLastActivity": 49,
+      "completedMentorships": 10,
+      "avgCorrectRate": 0.5237
+    },
+    {
+      "id": 7,
+      "name": "Bento Borges",
+      "studyYear": "prep",
+      "plan": "standard",
+      "clusterId": 0,
+      "clusterName": "Esfriando",
+      "engagementBand": "disengaged",
+      "daysSinceLastActivity": 94,
+      "completedMentorships": 5,
+      "avgCorrectRate": 0.5548
+    },
+    {
+      "id": 9,
+      "name": "Mirella Pereira",
+      "studyYear": "prep",
+      "plan": "standard",
+      "clusterId": 0,
+      "clusterName": "Esfriando",
+      "engagementBand": "disengaged",
+      "daysSinceLastActivity": 119,
+      "completedMentorships": 3,
+      "avgCorrectRate": 0.5187
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "pageSize": 3,
+    "total": 255,
+    "totalPages": 85
+  }
+}
