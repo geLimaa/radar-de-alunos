@@ -25,6 +25,10 @@ Uso (a partir da pasta python/):
 import argparse
 import sys
 
+import json 
+import pandas
+from pathlib import Path
+
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
@@ -40,13 +44,101 @@ def parse_args(argv=None):
                         help="número de clusters; sem ele, k é escolhido entre 3 e 6 por uma regra documentada")
     return parser.parse_args(argv)
 
+# TODO 2
+def build_features(students):
+
+    # Features
+    days_since_last_activity_feature = []
+    lessons_last_30d_feature = []
+    attendance_rate_feature = []
+    mentorships_usage_feature = []
+    simulations_taken_feature = []
+    avg_correct_rate_feature = []
+    avg_essay_score_feature = []
+
+    for i in range(len(students)):
+        tenure_days = students["tenureDays"][i]
+
+        days_since_last_activity = students["daysSinceLastActivity"][i]
+        if pandas.isna(days_since_last_activity):
+            days_since_last_activity_feature.append(tenure_days)
+        else:
+            days_since_last_activity_feature.append(days_since_last_activity)
+
+        lessons_last_30d_feature.append(students["lessonsLast30d"][i])
+        simulations_taken_feature.append(students["simulationsTaken"][i])
+
+        completed_mentorships = students["completedMentorships"][i]
+        missed_mentorships = students["missedMentorships"][i]
+        total_mentorships = completed_mentorships + missed_mentorships
+
+        if total_mentorships > 0:
+            attendance_rate_feature.append(completed_mentorships / total_mentorships)
+        else:
+            attendance_rate_feature.append(None)
+
+        if students["mentorshipFrequency"][i] == "monthly":
+            cadence = 30
+        else:
+            cadence = 15
+        max_mentorships = tenure_days // cadence + 1
+        mentorships_usage_feature.append(total_mentorships / max_mentorships)
+
+        if students["simulationsTaken"][i] > 0:
+            rates_sum = (
+                students["correctRateLanguages"][i]
+                + students["correctRateHuman"][i]
+                + students["correctRateNature"][i]
+                + students["correctRateMath"][i]
+            )
+            avg_correct_rate_feature.append(rates_sum / 4)
+        else:
+            avg_correct_rate_feature.append(None)
+
+        avg_essay_score = students["avgEssayScore"][i]
+        if pandas.isna(avg_essay_score):
+            avg_essay_score_feature.append(None)
+        else:
+            avg_essay_score_feature.append(avg_essay_score)
+
+    features = pandas.DataFrame()
+
+    features["daysSinceLastActivity"] = days_since_last_activity_feature
+    features["lessonsLast30d"] = lessons_last_30d_feature
+    features["attendanceRate"] = attendance_rate_feature
+    features["mentorshipUsage"] = mentorships_usage_feature
+    features["simulationsTaken"] = simulations_taken_feature
+    features["avgCorrectRate"] = avg_correct_rate_feature
+    features["avgEssayScore"] = avg_essay_score_feature
+
+    for column in ["attendanceRate", "avgCorrectRate", "avgEssayScore"]:
+        median = features[column].median()
+        features[column] = features[column].fillna(median)
+
+    return features
+
 
 def main(argv=None):
     args = parse_args(argv)
 
     # TODO 1: leia students.csv e metadata.json de args.input e calcule tenureDays.
+    dir_path = Path(args.input)
+    students = pandas.read_csv(dir_path / "students.csv", dtype={"daysSinceLastActivity": "Int64"})
+
+    file = open(dir_path / "metadata.json", encoding="utf-8")
+    metadata = json.load(file)
+    file.close()
+
+    reference_date = pandas.to_datetime(metadata["referenceDate"])
+    enrolled_at = pandas.to_datetime(students["enrolledAt"])
+    students["tenureDays"] = (reference_date - enrolled_at).dt.days
+
     # TODO 2: monte as features e trate os nulos (explique na seção 2 do ANALISE.md).
+    features = build_features(students)
+
     # TODO 3: padronize e calcule inércia e silhouette para k = 2..8 com random_state=args.seed.
+
+
     # TODO 4: escolha k (args.k ou a sua regra entre 3 e 6, escrita num comentário e na
     #         seção 3 do ANALISE.md) e ajuste o modelo final.
     # TODO 5: rode uma vez, olhe as médias de cada cluster da sua base (seed 42, N = 1000) e
