@@ -28,7 +28,77 @@ import sys
 import json 
 import pandas
 from pathlib import Path
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
 
+CLUSTERS_K = 4
+
+CLUSTERS = {
+    0: {
+        "name": "Focus on Exams and Essays",
+        "description": "Last activity 9 days ago on average, 11.7 simulations (overall: 7.0), and 5.2 essays with an average score of 806 (overall: 724). Average accuracy of 0.72 and 91% attendance in mentorships."
+    },
+
+    1: {
+        "name": "No Recorded Activity",
+        "description": "96% have never had any activity (overall: 7.6%). Average tenure of 261 days (overall: 178), no lessons in the last 30 days, almost no simulations, and 3.0 missed mentorships (overall: 0.85)."
+    },
+
+    2: {
+        "name": "Focus on Mentorships",
+        "description": "Last activity 7 days ago on average, 13.9 lessons in the last 30 days, and 96% attendance in mentorships (0.3 missed on average). Simulations are around average (7.0) and essay score is 693 (overall: 724)."
+    },
+
+    3: {
+        "name": "Declining Engagement",
+        "description": "Last activity 52 days ago on average (overall: 19), 1.2 lessons in the last 30 days, and 1.8 simulations. Average of 1.6 missed mentorships (overall: 0.85) and essay score of 568 (overall: 724)."
+    },
+}
+
+INTEGER_COLUMNS = [
+    "id", 
+    "daysSinceLastActivity", 
+    "lessonsLast30d", 
+    "completedMentorships",
+    "missedMentorships", 
+    "simulationsTaken", 
+    "essaysSubmitted",
+    "tenureDays", 
+    "clusterId"
+]
+
+FLOAT_COLUMNS = [
+    "avgMentorshipRating", 
+    "correctRateLanguages", 
+    "correctRateHuman",
+    "correctRateNature", 
+    "correctRateMath", 
+    "avgEssayScore"
+]
+
+FOUR_DECIMAL_COLUMNS = [
+    "correctRateLanguages", 
+    "correctRateHuman", 
+    "correctRateNature", 
+    "correctRateMath"
+]
+
+MEAN_COLUMNS = [
+    "tenureDays", 
+    "daysSinceLastActivity", 
+    "lessonsLast30d", 
+    "completedMentorships",
+    "missedMentorships", 
+    "avgMentorshipRating", 
+    "simulationsTaken",
+    "correctRateLanguages", 
+    "correctRateHuman", 
+    "correctRateNature",
+    "correctRateMath", 
+    "essaysSubmitted", 
+    "avgEssayScore"
+]
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
@@ -137,25 +207,139 @@ def main(argv=None):
     features = build_features(students)
 
     # TODO 3: padronize e calcule inércia e silhouette para k = 2..8 com random_state=args.seed.
+    # Calculates the mean and deviation
+    scaler = StandardScaler()
+    scaled = scaler.fit_transform(features)
 
+    k_selection = []
+
+    for k in range(2, 9):
+
+        model = KMeans(n_clusters=k, n_init=10, random_state=args.seed)
+        model.fit(scaled)
+
+        # Defines how much homogeneous are the students compared to the cluster
+        inertia = round(float(model.inertia_), 2)
+
+        # Defines how much closes the students ir to the neighboor group
+        silhouette = round(float(silhouette_score(scaled, model.labels_)), 4)
+
+        k_selection.append({
+            "k": k, 
+            "inertia": inertia, 
+            "silhouette": silhouette
+        })
 
     # TODO 4: escolha k (args.k ou a sua regra entre 3 e 6, escrita num comentário e na
     #         seção 3 do ANALISE.md) e ajuste o modelo final.
+
+    # k rule: between 3 e 6, increases k while the inertia falls at least 10% compared to the previouse k, until 6
+    # With --k, use the given value.
+    if args.k is not None:
+        k = args.k
+    else:
+        inertias = {}
+        for item in k_selection:
+            inertias[item["k"]] = item["inertia"]
+
+        k = 3
+        for candidate in range(4, 7):
+            drop = (inertias[candidate - 1] - inertias[candidate]) / inertias[candidate - 1]
+            if drop >= 0.10:
+                k = candidate
+            else:
+                break
+
+    final_model = KMeans(n_clusters=k, n_init=10, random_state=args.seed)
+    final_model.fit(scaled)
+    students["clusterId"] = final_model.labels_
+    
     # TODO 5: rode uma vez, olhe as médias de cada cluster da sua base (seed 42, N = 1000) e
     #         escreva à mão um dicionário com nome e descrição por id, por exemplo:
     #             CLUSTERS = {0: {"name": "...", "description": "..."}, ...}
     #         Ele só vale para o k que você olhou: com outro k, ou para um id fora dele, use
     #         o nome "Cluster N" (N = id) e uma descrição genérica. Os nomes precisam ser
     #         diferentes entre si; não precisa de regra que funcione com qualquer seed.
+    # ta feito :), usei k = 4, a priori foi escolhido 3 mas APÓS analisar a tabela, foi testado com 4 e destacou-se uma maior distinção entre os grupos dos estudantes, acentuando suas ênfases
+
+
     # TODO 6: crie a pasta --out se ela não existir
     #         (pathlib.Path(args.out).mkdir(parents=True, exist_ok=True)) e escreva nela
     #         students.json e clusters.json.
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+
+    students_json = []
+    for i in range(len(students)):
+        student = {}
+        for column in students.columns:
+            value = students[column][i]
+            if pandas.isna(value):
+                student[column] = None
+            elif column in INTEGER_COLUMNS:
+                student[column] = int(value)
+            elif column in FLOAT_COLUMNS:
+                student[column] = float(value)
+            else:
+                student[column] = str(value)
+        students_json.append(student)
+
+    students_file = open(out / "students.json", "w", encoding="utf-8")
+    json.dump(students_json, students_file, ensure_ascii=False, indent=2, allow_nan=False)
+    students_file.write("\n")
+    students_file.close()
+
+    clusters_json = []
+    for cluster_id in range(k):
+        cluster_students = students[students["clusterId"] == cluster_id]
+
+        feature_means = {}
+        for column in MEAN_COLUMNS:
+            mean = cluster_students[column].mean()
+            if pandas.isna(mean):
+                feature_means[column] = None
+            elif column in FOUR_DECIMAL_COLUMNS:
+                feature_means[column] = round(float(mean), 4)
+            else:
+                feature_means[column] = round(float(mean), 2)
+
+        if k == CLUSTERS_K and cluster_id in CLUSTERS:
+            name = CLUSTERS[cluster_id]["name"]
+            description = CLUSTERS[cluster_id]["description"]
+        else:
+            name = f"Cluster {cluster_id}"
+            description = "Grupo de alunos com comportamento parecido, sem descrição escrita à mão."
+
+        clusters_json.append({
+            "clusterId": cluster_id,
+            "name": name,
+            "description": description,
+            "size": len(cluster_students),
+            "featureMeans": feature_means,
+        })
+
+    clusters_output = {
+        "referenceDate": metadata["referenceDate"],
+        "seed": args.seed,
+        "studentCount": len(students),
+        "k": k,
+        "features": list(features.columns),
+        "kSelection": k_selection,
+        "clusters": clusters_json,
+    }
+
+    clusters_file = open(out / "clusters.json", "w", encoding="utf-8")
+    json.dump(clusters_output, clusters_file, ensure_ascii=False, indent=2, allow_nan=False)
+    clusters_file.write("\n")
+    clusters_file.close()
+
     # TODO 7: só depois do ajuste, imprima a tabela cruzada cluster x profiles_truth.csv
     #         (comente na seção 5 do ANALISE.md).
+    truth = pandas.read_csv(Path(args.input) / "profiles_truth.csv")
+    merged = students[["id", "clusterId"]].merge(truth, on="id")
+    print(pandas.crosstab(merged["clusterId"], merged["profile"]))
 
-    print("TODO: implemente a clusterização em cluster.py "
-          "(veja ../docs/01-dados-e-clusters.md).", file=sys.stderr)
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
