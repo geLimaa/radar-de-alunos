@@ -5,18 +5,48 @@ Dica: a pasta python/ já está no caminho de import (pytest.ini), então dá pa
 """
 
 import pytest
+import json
+import pandas
+import generate
 
+FILES = ["students.csv", "metadata.json", "profiles_truth.csv"]
+
+def run(out, seed=42, n=200):
+    generate.main([
+        "--n", str(n),
+        "--seed", str(seed),
+        "--reference-date", "2026-09-30",
+        "--out", str(out),
+    ])
 
 def test_same_seed_generates_identical_files(tmp_path):
-    # Esboço:
-    # 1. gere duas vezes com a mesma seed, em tmp_path / "a" e tmp_path / "b";
-    # 2. compare os bytes de students.csv, metadata.json e profiles_truth.csv.
-    pytest.skip("TODO")
+    run(tmp_path / "a")
+    run(tmp_path / "b")
+    for name in FILES:
+        assert (tmp_path / "a" / name).read_bytes() == (tmp_path / "b" / name).read_bytes()
 
 
 def test_consistency_rules_hold(tmp_path):
-    # Esboço:
-    # 1. gere uma base com N pequeno em tmp_path e leia o students.csv;
-    # 2. calcule tenureDays a partir de enrolledAt e da referenceDate do metadata.json;
-    # 3. confira as regras R2, R3, R5 e R6 em todas as linhas.
-    pytest.skip("TODO")
+    run(tmp_path)
+    df = pandas.read_csv(tmp_path / "students.csv", dtype={"daysSinceLastActivity": "Int64"})
+    metadata = json.loads((tmp_path / "metadata.json").read_text(encoding="utf-8"))
+    reference = pandas.Timestamp(metadata["referenceDate"])
+    tenure = (reference - pandas.to_datetime(df["enrolledAt"])).dt.days
+
+    days = df["daysSinceLastActivity"]
+    never = days.isna()
+    active = ~never
+    assert never.any()
+    assert (days[active] >= 0).all()
+    assert (days[active] <= tenure[active]).all()
+
+    counts = df.loc[never, ["lessonsLast30d", "simulationsTaken", "essaysSubmitted"]]
+    assert (counts == 0).all().all()
+
+    cadence = df["mentorshipFrequency"].map({"monthly": 30, "biweekly": 15})
+    total = df["completedMentorships"] + df["missedMentorships"]
+    assert (total <= tenure // cadence + 1).all()
+
+    no_completed = df["completedMentorships"] == 0
+    assert no_completed.any()
+    assert (df["avgMentorshipRating"].isna() == no_completed).all()
