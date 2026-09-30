@@ -47,7 +47,7 @@ CLUSTERS = {
 
     2: {
         "name": "Focus on Mentorships",
-        "description": "Last activity 7 days ago on average, 13.9 lessons in the last 30 days, and 96% attendance in mentorships (0.3 missed on average). Simulations are around average (7.0) and essay score is 693 (overall: 724)."
+        "description": "Last activity 7 days ago, 13.9 lessons/30d, 96% mentorship attendance (0.3 missed). About 7 simulations; essay score 693 (overall 724)."
     },
 
     3: {
