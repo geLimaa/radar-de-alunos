@@ -9,7 +9,7 @@ export class StudentsService {
   constructor(private readonly data: DataService) {}
 
   getStudents(query: StudentQueryDTO){
-    let students = [...this.data.students];
+    let students = this.data.students;
 
     if(query.clusterId !== undefined){
       students = students.filter(
@@ -39,7 +39,7 @@ export class StudentsService {
           student.correctRateHuman +
           student.correctRateNature +
           student.correctRateMath;
-          
+
         avgCorrectRate = Math.round((totalCorrectRate / 4) * 10 ** 4) / 10 ** 4;
       } 
       else {
@@ -52,9 +52,7 @@ export class StudentsService {
         studyYear: student.studyYear,
         plan: student.plan,
         clusterId: student.clusterId,
-        clusterName:
-          this.data.findCluster(student.clusterId)?.name ??
-          `Cluster ${student.clusterId}`,
+        clusterName: this.data.findCluster(student.clusterId)?.name,
         engagementBand: engagementBand(student.daysSinceLastActivity),
         daysSinceLastActivity: student.daysSinceLastActivity,
         completedMentorships: student.completedMentorships,
