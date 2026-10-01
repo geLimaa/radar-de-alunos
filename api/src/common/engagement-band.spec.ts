@@ -15,9 +15,9 @@ describe('engagementBand', () => {
     expect(engagementBand(14)).toBe('engaged');
   });
 
-  it('should return "sliping" for values from 15 to 30', () => {
-    expect(engagementBand(15)).toBe('sliping');
-    expect(engagementBand(30)).toBe('sliping');
+  it('should return "slipping" for values from 15 to 30', () => {
+    expect(engagementBand(15)).toBe('slipping');
+    expect(engagementBand(30)).toBe('slipping');
   });
 
   it('should return "disengaged" for values above 30', () => {

@@ -6,7 +6,7 @@ export function engagementBand(value: number | null): string {
     return "engaged";
   }
   else if(value >= 15 && value <= 30){
-    return "sliping";
+    return "slipping";
   }
   else{
     return "disengaged";

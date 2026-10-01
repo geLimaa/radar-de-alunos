@@ -9,7 +9,7 @@ export class StudentsService {
   constructor(private readonly data: DataService) {}
 
   getStudents(query: StudentQueryDTO){
-    let students = this.data.students;
+    let students = [...this.data.students];
 
     if(query.clusterId !== undefined){
       students = students.filter(
