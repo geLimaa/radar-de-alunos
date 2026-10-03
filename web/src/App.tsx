@@ -21,6 +21,9 @@ function App(){
   const [selectedClusterId, setSelectedClusterId] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 20
+  const [clustersAttempt, setClustersAttempt] = useState(0)
+  const [summaryAttempt, setSummaryAttempt] = useState(0)
+  const [studentsAttempt, setStudentsAttempt] = useState(0)
 
   const [clusters, setClusters] = useState<ClustersState>({
     kind: 'loading',
@@ -50,7 +53,7 @@ function App(){
     return () => {
       ignore = true
     }
-  },[])
+  },[clustersAttempt])
 
   useEffect(() => {
     let ignore = false
@@ -68,7 +71,7 @@ function App(){
     return () => {
       ignore = true
     }
-  },[selectedClusterId])
+  },[selectedClusterId, summaryAttempt])
 
   useEffect(() => {
     let ignore = false
@@ -86,7 +89,22 @@ function App(){
     return () => {
       ignore = true
     }
-  },[currentPage, selectedClusterId])
+  },[currentPage, selectedClusterId, studentsAttempt])
+
+  function retryClusters(){
+    setClusters({ kind: 'loading' })
+    setClustersAttempt((attempt) => attempt + 1)
+  }
+
+  function retrySummary(){
+    setSummary({ kind: 'loading' })
+    setSummaryAttempt((attempt) => attempt + 1)
+  }
+
+  function retryStudents(){
+    setStudents({ kind: 'loading' })
+    setStudentsAttempt((attempt) => attempt + 1)
+  }
 
   function handleClusterChange(value: string | number){
     let clusterId
@@ -124,24 +142,32 @@ function App(){
 
 
       {clusters.kind === 'loading' && <p>Carregando clusters...</p>}
-      {clusters.kind === 'error' && <p role="alert">Erro: {clusters.message}</p>}
+      {clusters.kind === 'error' && (
+        <section>
+          <p role="alert">Erro: {clusters.message}</p>
+          <button type="button" onClick={retryClusters}>
+            Tentar de novo
+          </button>
+        </section>
+      )}
       {
         clusters.kind === 'success' && (
           <>
+            {clusters.data.data.length === 0 && <p>Nenhum cluster encontrado.</p>}
             <ClusterSelector clusters={clusters.data.data} selectedClusterId={selectedClusterId} onChange={handleClusterChange} />
-            <section className='cluster-cards'>
-              {
-                clusters.data.data.map((cluster) => {
-                  return <ClusterCard key={cluster.clusterId} cluster={cluster} onSelect={handleClusterChange}/>
-                })
-              }
-            </section>
           </>
         )
       }
 
       {summary.kind === 'loading' && <p>Carregando resumo...</p>}
-      {summary.kind === 'error' && <p role="alert">Erro no resumo: {summary.message}</p>}
+      {summary.kind === 'error' && (
+        <section>
+          <p role="alert">Erro no resumo: {summary.message}</p>
+          <button type="button" onClick={retrySummary}>
+            Tentar de novo
+          </button>
+        </section>
+      )}
       {
         summary.kind === 'success' && (
           <section className='summary'>
@@ -151,8 +177,27 @@ function App(){
         )
       }
 
+      {
+        clusters.kind === 'success' && (
+          <section className='cluster-cards'>
+            {
+              clusters.data.data.map((cluster) => {
+                return <ClusterCard key={cluster.clusterId} cluster={cluster} onSelect={handleClusterChange}/>
+              })
+            }
+          </section>
+        )
+      }
+
       {students.kind === 'loading' && <p>Carregando alunos...</p>}
-      {students.kind === 'error' && <p role="alert">Erro nos alunos: {students.message}</p>}
+      {students.kind === 'error' && (
+        <section>
+          <p role="alert">Erro nos alunos: {students.message}</p>
+          <button type="button" onClick={retryStudents}>
+            Tentar de novo
+          </button>
+        </section>
+      )}
       {
         students.kind === 'success' && (
           <section> 
