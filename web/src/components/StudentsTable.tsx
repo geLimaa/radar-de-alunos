@@ -46,7 +46,7 @@ function StudentsTable({ students, onPreviousPage, onNextPage }: StudentsTablePr
                 <td>{studyYearLabels[student.studyYear as keyof typeof studyYearLabels]}</td>
                 <td>{planLabels[student.plan as keyof typeof planLabels]}</td>
                 <td>
-                  <span className="engagement-badge">
+                  <span className={`engagement-badge engagement-${student.engagementBand}`}>
                     {engagementLabels[student.engagementBand]}
                   </span>
                 </td>
