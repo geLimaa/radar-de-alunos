@@ -52,8 +52,8 @@
   "clusters": [
     {
       "clusterId": 0,
-      "name": "Focus on Exams and Essays",
-      "description": "Last activity 9 days ago on average, 11.7 simulations (overall: 7.0), and 5.2 essays with an average score of 806 (overall: 724). Average accuracy of 0.72 and 91% attendance in mentorships.",
+      "name": "Foco em provas e redações",
+      "description": "Última atividade há 9 dias em média, 11,7 simulados (geral: 7,0) e 5,2 redações com nota média de 806 (geral: 724). Acerto médio de 72% e 91% de presença nas mentorias.",
       "size": 349,
       "featureMeans": {
         "tenureDays": 177.8,
@@ -73,8 +73,8 @@
     },
     {
       "clusterId": 1,
-      "name": "No Recorded Activity",
-      "description": "96% have never had any activity (overall: 7.6%). Average tenure of 261 days (overall: 178), no lessons in the last 30 days, almost no simulations, and 3.0 missed mentorships (overall: 0.85).",
+      "name": "Sem atividade registrada",
+      "description": "96% nunca tiveram atividade (geral: 7,6%). Tempo médio de matrícula de 261 dias (geral: 178), nenhuma aula nos últimos 30 dias, quase nenhum simulado e 3,0 mentorias perdidas (geral: 0,85).",
       "size": 46,
       "featureMeans": {
         "tenureDays": 260.63,
@@ -94,8 +94,8 @@
     },
     {
       "clusterId": 2,
-      "name": "Focus on Mentorships",
-      "description": "Last activity 7 days ago on average, 13.9 lessons in the last 30 days, and 96% attendance in mentorships (0.3 missed on average). Simulations are around average (7.0) and essay score is 693 (overall: 724).",
+      "name": "Foco em mentorias",
+      "description": "Última atividade há 7 dias, 13,9 aulas em 30 dias e 96% de presença nas mentorias (0,3 faltas). Cerca de 7 simulados; nota de redação 693 (geral: 724).",
       "size": 341,
       "featureMeans": {
         "tenureDays": 166.62,
@@ -115,8 +115,8 @@
     },
     {
       "clusterId": 3,
-      "name": "Declining Engagement",
-      "description": "Last activity 52 days ago on average (overall: 19), 1.2 lessons in the last 30 days, and 1.8 simulations. Average of 1.6 missed mentorships (overall: 0.85) and essay score of 568 (overall: 724).",
+      "name": "Engajamento em queda",
+      "description": "Última atividade há 52 dias em média (geral: 19), 1,2 aulas nos últimos 30 dias e 1,8 simulados. Média de 1,6 mentorias perdidas (geral: 0,85) e nota de redação de 568 (geral: 724).",
       "size": 264,
       "featureMeans": {
         "tenureDays": 180.09,
