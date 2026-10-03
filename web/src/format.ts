@@ -33,3 +33,11 @@ export function formatDays(value: number | null): string {
 
   return `${formatNumber(value)} dias`
 }
+
+export function formatActivityDays(value: number | null): string {
+  if(value === null){ return 'Nunca' }
+  if(value === 0){ return 'hoje' }
+  if(value === 1){ return 'há 1 dia' }
+
+  return `há ${formatNumber(value)} dias`
+}

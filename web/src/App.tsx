@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getClusters, getStudents, getSummary } from './api.ts'
 import type { ClustersResponse, StudentsResponse, SummaryResponse } from './api.ts'
+import DashboardHeader from './components/DashboardHeader.tsx'
+import ClusterSelector from './components/ClusterSelector.tsx'
 import SummaryCard from './components/SummaryCard.tsx'
 import EngagementChart from './components/EngagementChart.tsx'
 import ClusterCard from './components/ClusterCard.tsx'
+import StudentsTable from './components/StudentsTable.tsx'
 
 type ClustersState = { kind: 'loading' } | { kind: 'success'; data: ClustersResponse } | { kind: 'error'; message: string }
 type SummaryState = { kind: 'loading' } | { kind: 'success'; data: SummaryResponse } | { kind: 'error'; message: string }
@@ -117,19 +120,23 @@ function App(){
   return (
 
     <main className="page">
-      <h1>Radar de Alunos</h1>
+      <DashboardHeader referenceDate={ clusters.kind === 'success' ? clusters.data.referenceDate: null} />
+
 
       {clusters.kind === 'loading' && <p>Carregando clusters...</p>}
       {clusters.kind === 'error' && <p role="alert">Erro: {clusters.message}</p>}
       {
         clusters.kind === 'success' && (
-          <section className='cluster-cards'>
-            {
-              clusters.data.data.map((cluster) => {
-                return <ClusterCard key={cluster.clusterId} cluster={cluster} onSelect={handleClusterChange}/>
-              })
-            }
-          </section>
+          <>
+            <ClusterSelector clusters={clusters.data.data} selectedClusterId={selectedClusterId} onChange={handleClusterChange} />
+            <section className='cluster-cards'>
+              {
+                clusters.data.data.map((cluster) => {
+                  return <ClusterCard key={cluster.clusterId} cluster={cluster} onSelect={handleClusterChange}/>
+                })
+              }
+            </section>
+          </>
         )
       }
 
@@ -148,29 +155,8 @@ function App(){
       {students.kind === 'error' && <p role="alert">Erro nos alunos: {students.message}</p>}
       {
         students.kind === 'success' && (
-          <section>
-            <p>Alunos nesta página: {students.data.data.length}</p>
-
-            {
-              students.data.data.map((student) => (
-                <article key={student.id}>
-                  <p>{student.name}</p>
-                  <p>{student.clusterName}</p>
-                </article>
-              ))
-            }
-
-            <button type="button" onClick={handlePreviousPage} disabled={currentPage === 1}>
-              Anterior
-            </button>
-
-            <span>
-              Página {students.data.meta.page} de {' '} {students.data.meta.totalPages}
-            </span>
-
-            <button type="button" onClick={handleNextPage} disabled={currentPage >= students.data.meta.totalPages}>
-              Próxima
-            </button>
+          <section> 
+            <StudentsTable students={students.data} onPreviousPage={handlePreviousPage} onNextPage={handleNextPage}/>
           </section>
         )
       }
