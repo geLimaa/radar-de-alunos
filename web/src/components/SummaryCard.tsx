@@ -5,7 +5,7 @@ type SummaryCardsProps = {
   summary: SummaryResponse
 }
 
-function SummaryCards({ summary }: SummaryCardsProps){
+function SummaryCard({ summary }: SummaryCardsProps){
   let engagedPercentage
   if(summary.totalStudents > 0){
     engagedPercentage = summary.engagement.engaged / summary.totalStudents
@@ -52,7 +52,7 @@ function SummaryCards({ summary }: SummaryCardsProps){
         <strong>{formatPercent(averageCorrectRate)}</strong>
       </article>
     </section>
-  )
+  );
 }
 
-export default SummaryCards;
+export default SummaryCard;

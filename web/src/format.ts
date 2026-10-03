@@ -27,3 +27,9 @@ export function formatDate(value: string): string {
     timeZone: 'UTC',
   }).format(new Date(value))
 }
+
+export function formatDays(value: number | null): string {
+  if(value === null){ return '—' }
+
+  return `${formatNumber(value)} dias`
+}

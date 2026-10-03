@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getClusters, getStudents, getSummary } from './api.ts'
 import type { ClustersResponse, StudentsResponse, SummaryResponse } from './api.ts'
-import SummaryCards from './components/SummaryCard.tsx'
+import SummaryCard from './components/SummaryCard.tsx'
+import EngagementChart from './components/EngagementChart.tsx'
+import ClusterCard from './components/ClusterCard.tsx'
 
 type ClustersState = { kind: 'loading' } | { kind: 'success'; data: ClustersResponse } | { kind: 'error'; message: string }
 type SummaryState = { kind: 'loading' } | { kind: 'success'; data: SummaryResponse } | { kind: 'error'; message: string }
@@ -83,7 +85,7 @@ function App(){
     }
   },[currentPage, selectedClusterId])
 
-  function handleClusterChange(value: string){
+  function handleClusterChange(value: string | number){
     let clusterId
     if(value === ''){
       clusterId = null
@@ -121,25 +123,13 @@ function App(){
       {clusters.kind === 'error' && <p role="alert">Erro: {clusters.message}</p>}
       {
         clusters.kind === 'success' && (
-          <>
-            <label>
-              Cluster:
-              <select value={selectedClusterId ?? ''} onChange={(event) => handleClusterChange(event.target.value)}>
-                <option value="">Todos</option>
-
-                {
-                  clusters.data.data.map((cluster) => (
-                    <option key={cluster.clusterId} value={cluster.clusterId}>
-                      {cluster.name}
-                    </option>
-                  ))
-                }
-
-              </select>
-            </label>
-
-            <p>Clusters encontrados: {clusters.data.data.length}</p>
-          </>
+          <section className='cluster-cards'>
+            {
+              clusters.data.data.map((cluster) => {
+                return <ClusterCard key={cluster.clusterId} cluster={cluster} onSelect={handleClusterChange}/>
+              })
+            }
+          </section>
         )
       }
 
@@ -147,7 +137,10 @@ function App(){
       {summary.kind === 'error' && <p role="alert">Erro no resumo: {summary.message}</p>}
       {
         summary.kind === 'success' && (
-          <SummaryCards summary={summary.data}/>
+          <section className='summary'>
+            <SummaryCard summary={summary.data}/>
+            <EngagementChart engagement={summary.data.engagement}/>
+          </section>
         )
       }
 
