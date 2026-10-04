@@ -56,10 +56,10 @@ A média geral da base é utilizada entre parênteses.
 
 | Cluster | Tamanho | Média 1 (geral) | Média 2 (geral) | Média 3 (geral) | Ação para o CS |
 |---|---:|---|---|---|---|
-| Focus on Exams and Essays | 349 (34,9%) | 11,73 simulados (6,97) | Nota de redação 805,59 (724,14) | 8,75 dias sem atividade (19,30) | Oferecer acompanhamento acadêmico avançado e metas de provas e redações. |
-| No Recorded Activity | 46 (4,6%) | 260,63 dias de matrícula (178,40) | 0,07 simulados (6,97) | 3,02 faltas em mentorias (0,85) | Fazer contato de reativação e investigar as barreiras para o início das atividades. |
-| Focus on Mentorships | 341 (34,1%) | 13,85 aulas em 30 dias (9,64) | 6,54 dias sem atividade (19,30) | Nota de redação 693,36 (724,14) | Manter o vínculo das mentorias e estimular a realização de simulados e redações. |
-| Declining Engagement | 264 (26,4%) | 51,78 dias sem atividade (19,30) | 1,23 aulas em 30 dias (9,64) | 1,84 simulados (6,97) | Criar uma campanha de reengajamento com contato prioritário. |
+| Foco em provas e redações | 349 (34,9%) | 11,73 simulados (6,97) | Nota de redação 805,59 (724,14) | 8,75 dias sem atividade (19,30) | Oferecer acompanhamento acadêmico avançado e metas de provas e redações. |
+| Sem atividade registrada | 46 (4,6%) | 260,63 dias de matrícula (178,40) | 0,07 simulados (6,97) | 3,02 faltas em mentorias (0,85) | Fazer contato de reativação e investigar as barreiras para o início das atividades. |
+| Foco em mentorias | 341 (34,1%) | 13,85 aulas em 30 dias (9,64) | 6,54 dias sem atividade (19,30) | Nota de redação 693,36 (724,14) | Manter o vínculo das mentorias e estimular a realização de simulados e redações. |
+| Engajamento em queda | 264 (26,4%) | 51,78 dias sem atividade (19,30) | 1,23 aulas em 30 dias (9,64) | 1,84 simulados (6,97) | Criar uma campanha de reengajamento com contato prioritário. |
 
 ## 5. Tabela cruzada cluster × perfil plantado
 
