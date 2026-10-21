@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "API do Radar de Alunos (starter do teste técnico)",
+  "description": "API do Radar de Alunos",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

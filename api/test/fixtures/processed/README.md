@@ -4,7 +4,7 @@
 
 ## De onde veio
 
-- **8 alunos fictícios** da base de exemplo da nossa solução (seed 42, N = 1.000, a mesma de `../../../../exemplos/`), copiados sem alteração. Os ids são os originais (3, 7, 8, 9, 10, 20, 93 e 254), por isso não são sequenciais.
+- **8 alunos fictícios** usados como fixture de testes, copiados sem alteração. Os ids são os originais (3, 7, 8, 9, 10, 20, 93 e 254), por isso não são sequenciais.
 - **2 clusters:** `0` com 5 alunos (3 na faixa `disengaged` e 2 na `slipping`) e `1` com 3 (1 `never` e 2 `engaged`).
 - `studentCount`, `k`, `size` e `featureMeans` foram **recalculados** para esses 8 alunos, com as regras do contrato: média ignorando nulos, taxas com 4 casas e o resto com 2. No cluster `1`, ninguém mandou redação, então `avgEssayScore` é `null`.
 - `name` e `description` vêm dos clusters originais. Os números citados nas descrições são os da base de 1.000 alunos, não os destes 8.

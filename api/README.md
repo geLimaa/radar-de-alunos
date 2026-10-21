@@ -1,6 +1,6 @@
 # API (NestJS)
 
-Starter da API do Radar de Alunos. O contrato completo das rotas está em [`../docs/02-api.md`](../docs/02-api.md).
+API REST do Radar de Alunos. Os contratos estão definidos nos DTOs, serviços e testes deste diretório.
 
 ## O que já vem pronto
 

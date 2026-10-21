@@ -1,6 +1,6 @@
 """Etapa 2: clusterizar os alunos.
 
-Contrato completo em ../docs/01-dados-e-clusters.md (seção "Etapa 2"). Resumo do que este
+Contrato do pipeline de clusterização definido neste projeto. Resumo do que este
 script deve fazer:
 
 - ler students.csv e metadata.json de --input (a data de referência vem do metadata.json);

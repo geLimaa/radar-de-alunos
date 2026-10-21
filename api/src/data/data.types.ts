@@ -1,4 +1,4 @@
-// Tipos dos arquivos gerados pelo cluster.py (contrato em docs/01-dados-e-clusters.md, na raiz do repositório).
+// Tipos dos arquivos gerados pelo cluster.py e usados pela API.
 // São só tipos: em parâmetro ou retorno de método com decorator (controllers),
 // importe com `import type { ... }` (veja a dica do erro TS1272 no README).
 

@@ -2,7 +2,7 @@
 
 React 19 + TypeScript + Vite 8, com [Recharts](https://recharts.org) já instalado para o gráfico.
 
-Hoje a página só mostra o título, o selo "Dados fictícios" e o status da API (`GET /api/health`). O dashboard que você vai construir está descrito em [`../docs/03-dashboard.md`](../docs/03-dashboard.md).
+Hoje a página só mostra o título, o selo "Dados fictícios" e o status da API (`GET /api/health`). O dashboard consome os endpoints da API e apresenta os dados de engajamento.
 
 ## Como rodar
 

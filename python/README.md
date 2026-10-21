@@ -1,6 +1,6 @@
 # Python: dados e clusters
 
-O que implementar está em [`../docs/01-dados-e-clusters.md`](../docs/01-dados-e-clusters.md).
+O pipeline de geração e clusterização está implementado neste diretório.
 
 Os dois scripts já têm os parâmetros de linha de comando. Enquanto não forem implementados,
 eles só imprimem um `TODO` e saem com código 1.
@@ -42,11 +42,11 @@ Se o PowerShell bloquear o `Activate.ps1`, rode antes
 ## Dicas
 
 - `python generate.py --help` e `python cluster.py --help` mostram os parâmetros.
-- No starter, `pytest` passa com 2 testes marcados como *skipped*. Ao implementar, tire o
+- No projeto, `pytest` passa com 2 testes marcados como *skipped*. Ao implementar, tire o
   `pytest.skip("TODO")`.
 - `ANALISE.md` é o modelo da sua análise (5 seções); preencha depois de rodar o `cluster.py`.
 - Nomes dos clusters: rode o `cluster.py` uma vez, olhe as médias de cada cluster, escreva os
   nomes e as descrições num dicionário por id e rode de novo (detalhes no item 7 da seção 2.2
-  do [`docs/01`](../docs/01-dados-e-clusters.md)).
+  do documentação do pipeline).
 - Não versione a `.venv`. Versione `data/raw/` e `data/processed/` gerados com seed 42 e
   N = 1000.

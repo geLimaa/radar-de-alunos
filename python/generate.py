@@ -1,6 +1,6 @@
 """Etapa 1: gerar a base sintética de alunos.
 
-Contrato completo em ../docs/01-dados-e-clusters.md (seção "Etapa 1"). Resumo do que este
+Contrato do pipeline de geração de dados definido neste projeto. Resumo do que este
 script deve fazer:
 
 - gerar --n alunos fictícios, com as 21 colunas de students.csv na ordem do dicionário de dados;
