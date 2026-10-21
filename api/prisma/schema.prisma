@@ -4,99 +4,99 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-    provider = "prisma-client"
-    output   = "../generated/prisma"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-    provider = "postgresql"
+  provider = "postgresql"
 }
 
 enum StudyYear {
-    high_school_1
-    high_school_2
-    high_school_3
-    prep
+  high_school_1
+  high_school_2
+  high_school_3
+  prep
 }
 
 enum Plan {
-    standard
-    premium
-    elite
+  standard
+  premium
+  elite
 }
 
 enum SchoolType {
-    public
-    private
+  public
+  private
 }
 
 enum MentorshipFrequency {
-    monthly
-    biweekly
+  monthly
+  biweekly
 }
 
 model ClusteringRun {
-    id            String    @id @default(cuid())
-    seed          Int
-    referenceDate DateTime  @db.Date
-    studentCount  Int
-    k             Int
-    features      Json
-    createdAt     DateTime  @default(now())
+  id            String   @id @default(cuid())
+  seed          Int
+  referenceDate DateTime @db.Date
+  studentCount  Int
+  k             Int
+  features      Json
+  createdAt     DateTime @default(now())
 
-    clusters      Cluster[]
-    students      Student[]
+  clusters Cluster[]
+  students Student[]
 }
 
 model Cluster {
-    id            String        @id @default(cuid())
-    clusterNumber Int
-    name          String
-    description   String
-    size          Int
-    featureMeans  Json
+  id            String @id @default(cuid())
+  clusterNumber Int
+  name          String
+  description   String
+  size          Int
+  featureMeans  Json
 
-    runId         String
-    run           ClusteringRun @relation(fields: [runId], references: [id], onDelete: Cascade)
-    students      Student[]
+  runId    String
+  run      ClusteringRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  students Student[]
 
-    @@unique([runId, clusterNumber])
-    @@index([runId])
+  @@unique([runId, clusterNumber])
+  @@index([runId])
 }
 
 model Student {
-    id                    String        @id @default(cuid())
-    sourceId              Int
-    name                  String
-    state                 String
-    studyYear             StudyYear
-    plan                  Plan
-    enrolledAt            DateTime      @db.Date
-    daysSinceLastActivity Int?
-    lessonsLast30d        Int
-    completedMentorships  Int
-    missedMentorships     Int
-    avgMentorshipRating   Float?
-    simulationsTaken      Int
-    avgEssayScore         Float?
-    tenureDays            Int
-    desiredCourse         String 
-    schoolType            SchoolType
-    mentorshipFrequency   MentorshipFrequency
-    correctRateLanguages  Float?
-    correctRateHuman      Float?
-    correctRateNature     Float?
-    correctRateMath       Float?
-    essaysSubmitted       Int
+  id                    String              @id @default(cuid())
+  sourceId              Int
+  name                  String
+  state                 String
+  studyYear             StudyYear
+  plan                  Plan
+  enrolledAt            DateTime            @db.Date
+  daysSinceLastActivity Int?
+  lessonsLast30d        Int
+  completedMentorships  Int
+  missedMentorships     Int
+  avgMentorshipRating   Float?
+  simulationsTaken      Int
+  avgEssayScore         Float?
+  tenureDays            Int
+  desiredCourse         String
+  schoolType            SchoolType
+  mentorshipFrequency   MentorshipFrequency
+  correctRateLanguages  Float?
+  correctRateHuman      Float?
+  correctRateNature     Float?
+  correctRateMath       Float?
+  essaysSubmitted       Int
 
-    runId                 String
-    run                   ClusteringRun @relation(fields:[runId], references: [id], onDelete: Cascade)
+  runId String
+  run   ClusteringRun @relation(fields: [runId], references: [id], onDelete: Cascade)
 
-    clusterId             String
-    cluster               Cluster       @relation(fields:[clusterId], references: [id])
+  clusterId String
+  cluster   Cluster @relation(fields: [clusterId], references: [id])
 
-    @@unique([runId, sourceId])
-    @@index([runId])
-    @@index([clusterId])
-    @@index([daysSinceLastActivity])
+  @@unique([runId, sourceId])
+  @@index([runId])
+  @@index([clusterId])
+  @@index([daysSinceLastActivity])
 }
